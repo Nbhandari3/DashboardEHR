@@ -1,6 +1,21 @@
 import streamlit as st
 
 # -----------------------------
+# Custom Background Color
+# -----------------------------
+page_bg_color = "lightblue"  # Change app background color here
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-color: {page_bg_color};
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
 # Employee Login Credentials
 # -----------------------------
 employee_signin = {
