@@ -1,14 +1,56 @@
 import streamlit as st
 
 # -----------------------------
-# Custom Background Color
+# Theme / Background Color
 # -----------------------------
-page_bg_color = "lightblue" 
+page_bg_color = "lightblue"
+text_color = "darkblue"
+button_color = "#87CEFA"       # normal button color
+button_hover_color = "#00BFFF" # darker blue on hover
+input_bg_color = "#E0FFFF"     # input boxes
+
 st.markdown(
     f"""
     <style>
+    /* Main app background */
     .stApp {{
         background-color: {page_bg_color};
+        color: {text_color};
+    }}
+
+    /* Expanders and containers */
+    .css-1d391kg, .css-1v3fvcr, .css-1fcdlhc {{
+        background-color: {page_bg_color} !important;
+    }}
+
+    /* Buttons normal */
+    div.stButton > button {{
+        background-color: {button_color};
+        color: {text_color};
+        border-radius: 8px;
+    }}
+
+    /* Buttons hover effect */
+    div.stButton > button:hover {{
+        background-color: {button_hover_color};
+        color: white;
+    }}
+
+    /* Input fields */
+    input {{
+        background-color: {input_bg_color} !important;
+        color: {text_color} !important;
+    }}
+
+    /* Expander header hover effect */
+    .streamlit-expanderHeader {{
+        background-color: {button_color} !important;
+        border-radius: 5px;
+    }}
+
+    .streamlit-expanderHeader:hover {{
+        background-color: {button_hover_color} !important;
+        color: white;
     }}
     </style>
     """,
@@ -57,7 +99,6 @@ if "patients" not in st.session_state:
 # -----------------------------
 if not st.session_state.logged_in:
     st.title("Employee Login")
-
     emp_id = st.text_input("Employee ID (123456)", key="login_emp")
     password = st.text_input("Password (admin)", type="password", key="login_pass")
 
