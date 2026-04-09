@@ -376,10 +376,10 @@ else:
     """, unsafe_allow_html=True)
 
     # Tabs
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         "➕ Register Patient", "🔍 Search Patient",
         "✏️ Update Patient", "🗑️ Delete Patient",
-        "📋 All Patients", "🧪 Demo Patients", "📜 Audit Log"
+        "📋 All Patients", "📜 Audit Log"
     ])
 
     # ── REGISTER ──
@@ -511,9 +511,50 @@ else:
 
     # ── ALL PATIENTS ──
     with tab5:
-        st.subheader("All Patients (FHIR Server)")
+        st.subheader("📋 All Patients")
+
+        # ── Section 1: Demo patients (instant, local) ──
+        st.markdown("### 👥 Demo Patients")
+        st.caption("12 pre-loaded demo patients available instantly. Use the button below to also register them on the FHIR server.")
+
+        for mrn, p in DEMO_PATIENTS.items():
+            with st.expander(f"👤 {p['name']} — MRN: {mrn}"):
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write(f"**Gender:** {p['gender']}")
+                    st.write(f"**Age:** {p['age']}")
+                    st.write(f"**Address:** {p['address']}")
+                with col2:
+                    st.write(f"**MRN:** {mrn}")
+                    st.write(f"**Diagnosis:** {p['diagnosis']}")
+                    st.write(f"**Treatment:** {p['treatment']}")
+
+        st.divider()
+
+        # ── Section 2: Push to FHIR ──
+        st.markdown("### 🚀 Push Demo Patients to FHIR Server")
+        st.info("Register all 12 demo patients as real FHIR R4 resources so you can search, update, and delete them using the other tabs.")
+
+        if st.session_state.demo_seeded:
+            st.success("✅ Demo patients have already been pushed to the FHIR server this session.")
+        else:
+            if st.button("📤 Push All 12 Demo Patients to FHIR Server", use_container_width=True):
+                with st.spinner("Registering 12 patients on FHIR server..."):
+                    results = seed_demo_patients_to_fhir()
+                st.session_state.demo_seeded = True
+                audit_log("DEMO_SEED_COMPLETE", f"{results['success']} patients pushed to FHIR server")
+                st.success(f"✅ Successfully registered {results['success']}/12 patients on the FHIR server!")
+                if results["failed"] > 0:
+                    st.warning(f"⚠️ {results['failed']} patients failed. Try again.")
+                for name in results["names"]:
+                    st.write(f"  ✓ {name}")
+
+        st.divider()
+
+        # ── Section 3: Load from FHIR ──
+        st.markdown("### 🌐 Load Patients from FHIR Server")
         st.caption("Retrieves the most recent 20 patients from the HAPI FHIR server.")
-        if st.button("Load Patients from FHIR Server"):
+        if st.button("Load from FHIR Server", key="load_fhir_btn"):
             with st.spinner("Fetching from FHIR server..."):
                 success, entries = fhir_get_all_patients()
             if success and entries:
@@ -536,47 +577,8 @@ else:
             else:
                 st.error("❌ Could not connect to FHIR server.")
 
-    # ── DEMO PATIENTS ──
-    with tab6:
-        st.subheader("🧪 Demo Patient Records")
-        st.caption("All 12 demo patients from the original app. View them here instantly, or push them to the FHIR server.")
-
-        # Show all 12 in a clean table locally
-        st.markdown("### 👥 Pre-loaded Demo Patients")
-        for mrn, p in DEMO_PATIENTS.items():
-            with st.expander(f"👤 {p['name']} — MRN: {mrn}"):
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.write(f"**Gender:** {p['gender']}")
-                    st.write(f"**Age:** {p['age']}")
-                    st.write(f"**Address:** {p['address']}")
-                with col2:
-                    st.write(f"**MRN:** {mrn}")
-                    st.write(f"**Diagnosis:** {p['diagnosis']}")
-                    st.write(f"**Treatment:** {p['treatment']}")
-
-        st.divider()
-        st.markdown("### 🚀 Push Demo Patients to FHIR Server")
-        st.info("This will register all 12 demo patients as real FHIR R4 Patient resources on the HAPI FHIR server. You can then search, update, and delete them using the other tabs.")
-
-        if st.session_state.demo_seeded:
-            st.success("✅ Demo patients have already been pushed to the FHIR server this session.")
-        else:
-            if st.button("📤 Push All 12 Demo Patients to FHIR Server", use_container_width=True):
-                with st.spinner("Registering 12 patients on FHIR server... this may take a moment..."):
-                    results = seed_demo_patients_to_fhir()
-                st.session_state.demo_seeded = True
-                audit_log("DEMO_SEED_COMPLETE", f"{results['success']} patients pushed to FHIR server")
-                st.success(f"✅ Successfully registered {results['success']}/12 patients on the FHIR server!")
-                if results["failed"] > 0:
-                    st.warning(f"⚠️ {results['failed']} patients failed to register. Try again.")
-                st.markdown("**Patients registered:**")
-                for name in results["names"]:
-                    st.write(f"  ✓ {name}")
-                st.info("You can now search for any of these patients by MRN in the **Search Patient** tab.")
-
     # ── AUDIT LOG ──
-    with tab7:
+    with tab6:
         st.subheader("📜 HIPAA Audit Log")
         st.caption("All access and actions are logged per HIPAA Security Rule §164.312(b) — Audit Controls.")
         if st.session_state.audit_log:
