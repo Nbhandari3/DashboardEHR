@@ -3,7 +3,7 @@ import streamlit as st
 # -----------------------------
 # Custom Background Color
 # -----------------------------
-page_bg_color = "lightblue"  # Change app background color here
+page_bg_color = "lightblue" 
 st.markdown(
     f"""
     <style>
