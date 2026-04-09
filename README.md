@@ -1,22 +1,22 @@
-# 🏥 EHR Dashboard Development
+#  EHR Dashboard Development
 
 A Python-based Electronic Health Record (EHR) desktop application connected to a FHIR server, built to demonstrate real-world health informatics concepts including patient data management, regulatory compliance, and clinical workflow optimization.
 
 ---
 
-## 🚀 Live Demo
+##  Live Demo
 
-👉 **[Launch the App](https://fapeqfrjqpeb5fxs2kdgpg.streamlit.app/)**
+ **[Launch the App](https://dashboardehr-lmznzyst5xzfersjzbmqx6.streamlit.app/)**
 
 ---
 
-## 📋 Overview
+##  Overview
 
 This project simulates a functional EHR dashboard that allows healthcare staff to register, search, and update patient records in compliance with HIPAA and FHIR standards. It was developed as part of the Health Informatics program at **Kennesaw State University**.
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Patient Registration** — Add new patients with demographic and clinical information
 - **Patient Search** — Quickly look up records by name, ID, or other identifiers
@@ -26,7 +26,7 @@ This project simulates a functional EHR dashboard that allows healthcare staff t
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 | Technology | Purpose |
 |---|---|
@@ -37,9 +37,9 @@ This project simulates a functional EHR dashboard that allows healthcare staff t
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
-You can use the app instantly via the **[Live Demo](https://fapeqfrjqpeb5fxs2kdgpg.streamlit.app/)**, or run it locally by following the steps below.
+You can use the app instantly via the **[Live Demo](https://dashboardehr-lmznzyst5xzfersjzbmqx6.streamlit.app/)**, or run it locally by following the steps below.
 
 ### Prerequisites
 
@@ -68,7 +68,7 @@ python main.py
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 EHR/
@@ -83,7 +83,7 @@ EHR/
 
 ---
 
-## 🔒 Compliance & Standards
+## Compliance & Standards
 
 This application was designed with the following standards in mind:
 
@@ -93,7 +93,7 @@ This application was designed with the following standards in mind:
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Nitika Bhandari**  
 M.S. Healthcare Management and Informatics — Kennesaw State University  
@@ -101,7 +101,7 @@ M.S. Healthcare Management and Informatics — Kennesaw State University
 
 ---
 
-## 📚 Academic Context
+##  Academic Context
 
 Developed as part of the Health Informatics curriculum at Kennesaw State University. This project applies classroom concepts — including EHR system design, FHIR-based data exchange, and healthcare compliance — to a working application.
 
